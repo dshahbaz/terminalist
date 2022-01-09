@@ -439,7 +439,7 @@ def main():
         )
         print_curl_update_command(this_file)
     else:
-        args: List[str] = sys.argv[1:]
+        args: List[str] = sys.argv[1:    ]
         print_command_alternatives_details(this_file, command, args)
 
         # Make sure we exit 1, because terminalist.py actually intercepted the call to the old tool
