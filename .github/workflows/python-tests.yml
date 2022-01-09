@@ -1,0 +1,36 @@
+name: Python package
+
+on:
+  push:
+    branches: [ $default-branch ]
+  pull_request:
+    branches: [ $default-branch ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.6"]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python3 -m pip install --upgrade pip
+        python3 -m pip install black mypy
+    - name: Lint with black
+      run: |
+        black --config pyproject.toml --check --diff .
+    - name: Type check with mypy
+      run: |
+        mypy .
+    - name: Test with unittest
+      run: |
+        python3 -m unittest *test.py
