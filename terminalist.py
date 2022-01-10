@@ -130,6 +130,9 @@ class Colors:
 
 def _color_print(
     to_print: Any,
+   
+   
+   
     *,
     color: str,
     end: str = "\n",
