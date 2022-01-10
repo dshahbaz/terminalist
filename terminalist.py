@@ -206,6 +206,15 @@ register_alternative(
                 """
             ),
         ),
+        S1(
+            "-size",
+            "--size",
+            textwrap.dedent(
+                """
+                Match against exact file size. Use prefix +/- to match larger/smaller. Use suffixes:
+                b, k, m, g, t, ki, mi, gi, ti """
+            ),
+        ),
         S0(
             "-mount",
             "--mount",
