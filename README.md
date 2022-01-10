@@ -80,3 +80,10 @@ script. Run this to update:
 terminalist.py --self-update
 ```
 
+## Development
+
+Adding new alternative mappings can be done by adding global `register_alternative()` calls. See
+`terminalist.py` code for where this happens (about the middle of the file).
+
+Adding additional command line argument subtstitutions for existing alternatives can also be done
+there.
