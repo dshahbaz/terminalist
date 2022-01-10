@@ -97,6 +97,28 @@ class TestRunning(unittest.TestCase):
             self.assertIn("<name>", find_run.stdout)
             self.assertIn("The name argument does not have a flag", find_run.stdout)
 
+    def test_install_not_writable(self):
+        with tempfile.TemporaryDirectory() as t:
+            d = pathlib.Path(t)
+            shutil.copy(terminalist.__file__, d)
+
+            terminalist_script = d / "terminalist.py"
+            find = d / "find"
+
+            # Remove write bits.
+            try:
+                d.chmod(0o555)
+                install_run = subprocess.run(
+                    [str(terminalist_script), "--install", "find"],
+                    stdout=subprocess.PIPE,
+                    encoding="utf-8",
+                )
+                self.assertEqual(1, install_run.returncode)
+                self.assertIn("not writable", install_run.stdout)
+            finally:
+                # Restore settings, so that test clean up can happen.
+                d.chmod(0o777)
+
 
 if __name__ == "__main__":
     unittest.main()

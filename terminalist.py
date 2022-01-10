@@ -405,6 +405,11 @@ def manage(this_file: pathlib.Path):
             print(f"{new_interceptor} already exists! Not replacing.")
             return
 
+        if not os.access(new_interceptor.parent, os.W_OK):
+            print(f"{new_interceptor.parent} is not writable! This is a requirement. Exiting.")
+            sys.exit(1)
+            return
+
         new_interceptor.symlink_to(this_file)
         print(f"Added interception for {args.install}; try running `{args.install}` now.")
     elif args.self_update:
